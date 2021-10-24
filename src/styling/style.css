@@ -8,17 +8,18 @@ body {
     background-image: url("/src/images/tile.jpg");
 }
 
-
 #app {
     display: flex;
     min-width: 750px;
     min-height: 500px;
-    max-width: 1500px;
-    max-height: 1125px;
+    max-width: 2000px;
+    max-height: 1750px;
     background-color: seashell;
     border: 2px solid black;
     border-radius: 5px;
     flex-direction: column;
+    height: 50%;
+    width: 75%;
 }
 
 .header {
@@ -27,9 +28,50 @@ body {
     max-height: 50px;
     line-height: 50px;
     background-color: rgb(33, 39, 56);
-    padding-left: 15px;
     color: white;
     font-weight: bold;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.text {
+    display: flex;
+    margin-left: 15px;
+}
+
+.adder {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 35vh;
+    left: 40vw;
+    background-color: rgb(33, 39, 56) ;
+    border: 1px solid black;
+    border-radius: 4px;
+    width: 20vw;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    font-weight: bold;
+    color: white;
+    padding: 15px;
+}
+
+textarea {
+    resize: none;
+    font-size: 12px;
+}
+
+.add {
+    display: flex;
+    width: 5%;
+    border: 1px solid black;
+    border-radius: 5px;
+    justify-content: center;
+    height: 50%;
+    align-items: center;
+    margin-right: 15px;
+    background-color: rgb(209, 214, 70);
 }
 
 .container {
@@ -41,21 +83,68 @@ body {
 .sidebar {
     display: flex;
     width: 20%;
-    padding-left: 15px;
-    padding-top: 15px;
     background-color: rgb(165, 171, 175);
 }
 
 .content {
     display: flex;
     width: 80%;
-    padding-top: 15px;
-    padding-left: 15px;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
+.card {
+    display: flex;
+    border: 1px solid black;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: rgb(151, 146, 227);
+    transition: all 2s ease;
+    font-size: 17px;
+    font-weight: 300;
+    border-radius: 5px;
+    flex-direction: column;
+    margin: 10px;
+}
 
+.headerDiv {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
 
-*{font-family: 'Roboto', sans-serif;}
+.cardTitle {
+    display: flex;
+    font-size: 14px;
+    font-weight: normal;
+    height: 25px;
+    line-height: 25px;
+}
+
+.date {
+    display: flex;
+    font-size: 12px;
+    height: 25px;
+    line-height: 25px;
+}
+
+.description {
+    display: flex;
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    font-size: 12px;
+    gap: 15px;
+}
+
+*{
+    font-family: 'Roboto', sans-serif;
+}
 
 
 
