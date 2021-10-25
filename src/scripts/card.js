@@ -1,5 +1,6 @@
-import { format, compareAsc } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
+let content = document.querySelector(".content");
 
 const createCard = (title,description,date) => {
 
@@ -14,13 +15,13 @@ const createCard = (title,description,date) => {
 
 };
 
-
-const createDivClosed = (card) => {
+const createDivClosed = (card,key) => {
 
 
     //Create Main Div
     let mainDiv = document.createElement("div");
     mainDiv.classList.add("card");
+    mainDiv.dataset.key = key;
 
     //Create Header and elements
     let headerDiv = document.createElement("div");
@@ -32,7 +33,7 @@ const createDivClosed = (card) => {
 
     let dateDiv = document.createElement("div");
     dateDiv.classList.add("date");
-    dateDiv.innerText = "Due: " + format(card.date, "MMMM-dd-yyyy");
+    dateDiv.innerText = "Due: " + format(parseISO(card.date), "MMMM-dd-yyyy");
 
     //Append Everything and return
     headerDiv.append(titleDiv);
@@ -44,36 +45,18 @@ const createDivClosed = (card) => {
 
 };
 
-const createDivOpen = (card) => {
+const expand = (div) => {
 
-
-    //Create Main Div
-    let mainDiv = document.createElement("div");
-    mainDiv.classList.add("card");
-
-
-    //Create Header and elements
-    let headerDiv = document.createElement("div");
-    headerDiv.classList.add("headerDiv");
-
-    let titleDiv = document.createElement("div");
-    titleDiv.classList.add("cardTitle");
-    titleDiv.innerText = card.title;
-
-    let dateDiv = document.createElement("div");
-    dateDiv.classList.add("date");
-    dateDiv.innerText = "Due: " + format(card.date, "MMMM-dd-yyyy");
-
-    headerDiv.append(titleDiv);
-    headerDiv.append(dateDiv);
-
+    let ob = div.dataset.key
+    ob = JSON.parse(window.localStorage.getItem(ob));
+   
     //Create Body
     let body = document.createElement("div");
     body.classList.add("body");
 
     let desc = document.createElement("div");
     desc.classList.add("description");
-    desc.innerText = card.description;
+    desc.innerText = ob.description;
 
     let footer = document.createElement("div");
     footer.classList.add("footer");
@@ -82,27 +65,20 @@ const createDivOpen = (card) => {
     deleter.classList.add("delete");
     deleter.innerText = "Delete"
 
-    let editor = document.createElement("div");
-    editor.classList.add("edit");
-    editor.innerText = "Edit"
-
     body.append(desc);
-    footer.append(editor);
     footer.append(deleter);
 
-
-
     //Append Everything and return
-    mainDiv.append(headerDiv);
-    mainDiv.append(body);
-    mainDiv.append(footer);
-
-    return mainDiv;
+    div.append(body);
+    div.append(footer);
 
 };
 
+const close = (div) => {
+    div.removeChild(div.children[2]);
+    div.removeChild(div.children[1]);
+} 
 
 
 
-
-export {createCard, createDivClosed, createDivOpen};
+export {createCard, createDivClosed, expand, close, content};

@@ -1,4 +1,8 @@
+import {createCard, expand, close } from "./card";
+
+
 let addButton = document.querySelector(".add");
+let storage = window.localStorage;
 
 addButton.addEventListener('click', ()=> {
 
@@ -8,9 +12,10 @@ addButton.addEventListener('click', ()=> {
     let header = document.createElement("div");
     header.innerText = "Create New Task";
 
-    let title = document.createElement("INPUT");
+    let title = document.createElement("textarea");
     title.placeholder = "Task Name";
     title.style.width = "18vw"
+    title.style.height = "15px";
 
     let description = document.createElement("textarea");
     description.placeholder = "Enter a Description";
@@ -51,6 +56,34 @@ addButton.addEventListener('click', ()=> {
         document.body.removeChild(menu);
     });
 
+    submit.addEventListener('click', ()=> {
+
+        let card = createCard(title.value, description.value, dueDate.valueAsDate);
+       
+        document.body.removeChild(menu);
+        let storageKey = storage.length + 1;
+
+        storage.setItem(storageKey, JSON.stringify(card));
+        console.log(storage);
+
+    });
+
     document.body.append(menu);
 
 });
+
+const openClose = (div) => {
+
+    div.addEventListener('click', (e)=> {
+        console.log(div);
+            
+        if (div.children.length == 2) {
+            expand(div);
+        } else {
+            close(div);
+        }
+
+    });  
+};
+
+export {openClose};
