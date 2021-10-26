@@ -1,8 +1,13 @@
 import {createCard, expand, close } from "./card";
+import {renderAll, renderWeek, renderMonth, renderYear} from "./rendering.js";
 
 
 let addButton = document.querySelector(".add");
 let storage = window.localStorage;
+let all = document.querySelector("#all");
+let week = document.querySelector("#week");
+let month = document.querySelector("#month");
+let year = document.querySelector("#year");
 
 addButton.addEventListener('click', ()=> {
 
@@ -59,12 +64,11 @@ addButton.addEventListener('click', ()=> {
     submit.addEventListener('click', ()=> {
 
         let card = createCard(title.value, description.value, dueDate.valueAsDate);
-       
+  
         document.body.removeChild(menu);
         let storageKey = storage.length + 1;
 
         storage.setItem(storageKey, JSON.stringify(card));
-        console.log(storage);
 
     });
 
@@ -72,18 +76,38 @@ addButton.addEventListener('click', ()=> {
 
 });
 
+all.addEventListener("click", ()=> {
+    renderAll();
+});
+
+week.addEventListener("click", ()=> {
+    renderWeek();
+});
+
+month.addEventListener("click", ()=> {
+    renderMonth();
+});
+
+year.addEventListener("click", ()=> {
+    renderYear();
+});
+
 const openClose = (div) => {
 
-    div.addEventListener('click', (e)=> {
-        console.log(div);
+    div.addEventListener('click', ()=> {
             
-        if (div.children.length == 2) {
-            expand(div);
+        if (div.parentNode.children.length == 1) {
+            expand(div.parentNode);
         } else {
-            close(div);
+            close(div.parentNode);
         }
 
     });  
 };
+
+
+
+
+
 
 export {openClose};

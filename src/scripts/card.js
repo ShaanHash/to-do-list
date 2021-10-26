@@ -1,6 +1,7 @@
-import { format, parseISO } from 'date-fns';
+import { format, parseISO, addHours } from 'date-fns';
 
 let content = document.querySelector(".content");
+
 
 const createCard = (title,description,date) => {
 
@@ -17,7 +18,6 @@ const createCard = (title,description,date) => {
 
 const createDivClosed = (card,key) => {
 
-
     //Create Main Div
     let mainDiv = document.createElement("div");
     mainDiv.classList.add("card");
@@ -33,7 +33,7 @@ const createDivClosed = (card,key) => {
 
     let dateDiv = document.createElement("div");
     dateDiv.classList.add("date");
-    dateDiv.innerText = "Due: " + format(parseISO(card.date), "MMMM-dd-yyyy");
+    dateDiv.innerText = "Due: " + format(addHours(parseISO(card.date),5), "MMMM-dd-yyyy");
 
     //Append Everything and return
     headerDiv.append(titleDiv);
@@ -47,8 +47,9 @@ const createDivClosed = (card,key) => {
 
 const expand = (div) => {
 
-    let ob = div.dataset.key
-    ob = JSON.parse(window.localStorage.getItem(ob));
+    //Find the object with Key
+    let key = div.dataset.key
+    let ob = JSON.parse(window.localStorage.getItem(div.dataset.key));
    
     //Create Body
     let body = document.createElement("div");
@@ -65,8 +66,29 @@ const expand = (div) => {
     deleter.classList.add("delete");
     deleter.innerText = "Delete"
 
+    deleter.addEventListener("click", () => {
+        window.localStorage.removeItem(key);
+        content.removeChild(div);
+    });
+
+    let done = document.createElement("div");
+    done.classList.add("delete");
+    done.innerText = "Done"
+    done.style.backgroundColor = "rgb(209, 214, 70)";
+
+    done.addEventListener('click', ()=>{
+
+        if(div.style.backgroundColor == "rgb(209, 214, 70)") {
+            div.style.backgroundColor = "rgb(151, 146, 227)" 
+        } else {
+            div.style.backgroundColor = "rgb(209, 214, 70)"
+        };
+
+    });
+
     body.append(desc);
     footer.append(deleter);
+    footer.append(done);
 
     //Append Everything and return
     div.append(body);
